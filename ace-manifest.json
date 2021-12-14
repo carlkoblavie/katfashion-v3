@@ -1,5 +1,32 @@
 {
   "commands": {
+    "scaffold": {
+      "settings": {
+        "loadApp": false,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/Scaffold",
+      "commandName": "scaffold",
+      "description": "generate a scaffold for a resource",
+      "args": [
+        {
+          "type": "string",
+          "propertyName": "model",
+          "name": "model",
+          "required": true
+        },
+        {
+          "type": "string",
+          "propertyName": "properties",
+          "name": "properties",
+          "required": true
+        }
+      ],
+      "aliases": [
+        "s"
+      ],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",
@@ -265,5 +292,7 @@
       ]
     }
   },
-  "aliases": {}
+  "aliases": {
+    "s": "scaffold"
+  }
 }

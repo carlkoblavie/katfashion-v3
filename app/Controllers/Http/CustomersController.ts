@@ -4,12 +4,12 @@ import Customer from 'App/Models/Customer'
 
 export default class CustomersController {
   public async index({ view }: HttpContextContract) {
-    const data = Customer.all()
-    return view.render('admin/customers', { data })
+    const customers = await Customer.all()
+    return view.render('admin/customers/index', { customers })
   }
 
-  public async create({ inertia }: HttpContextContract) {
-    return inertia.render('Customer/Create')
+  public async create({ view }: HttpContextContract) {
+    return view.render('admin/customers/create')
   }
 
   public async destroy({ params, response, session }) {
@@ -79,17 +79,17 @@ export default class CustomersController {
       await customer.save()
 
       session.flash('message', 'Customer updated successfully!')
-      response.redirect().status(303).back()
+      response.redirect().back()
     } catch (error) {
       session.flash('errors', error.messages)
-      response.redirect().status(303).back()
+      response.redirect().back()
     }
   }
 
-  public async show({ inertia, params }: HttpContextContract) {
+  public async show({ view, params }: HttpContextContract) {
     const customerId = params.id
     const customer = Customer.find(customerId)
-    return inertia.render('Customer/Edit', { customer })
+    return view.render('/admin/customers/create')
   }
 
   public async store({ session, response, request }: HttpContextContract) {
