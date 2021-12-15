@@ -1,6 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import Customer from 'App/Models/Customer'
+import CreateCustomerValidator from 'App/Validators/CreateCustomerValidator'
+import UpdateCustomerValidator from 'App/Validators/UpdateCustomerValidator'
+
 
 export default class CustomersController {
   public async index({ view }: HttpContextContract) {
@@ -17,130 +19,51 @@ export default class CustomersController {
 
     await customer.delete()
 
-    session.flash('message', 'Customer added successfully!')
+    session.flash('success', 'Customer deleted successfully!')
     response.redirect().back()
   }
 
   public async update({ session, response, request, params }: HttpContextContract) {
     const customerId = params.id
     const customer = await Customer.find(customerId)
+	  
+	  const { first_name, last_name, location, gender, phone_number, other_phone_number } = await request
+	  	.validate(UpdateCustomerValidator)
 
-    const updatedCustomer = schema.create({
-      first_name: schema.string({ trim: true }, [
-        rules.required(),
-        rules.alpha(),
-        rules.minLength(2)
-      ]),
-      location: schema.string({ trim: true }, [
-        rules.required(),
-        rules.minLength(2)
-      ]),
-      last_name: schema.string({ trim: true }, [
-        rules.required(),
-        rules.alpha(),
-        rules.minLength(2)
-      ]),
-      gender: schema.enum(['Male', 'Female']),
-      phone_number: schema.string({ trim: true }, [
-        rules.mobile({ locales: ['en-GH'] }),
-        rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true, whereNot: { id: customer.id } }),
-        rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true, whereNot: { id: customer.id } })
-
-      ]),
-      other_phone_number: schema.string.optional({ trim: true }, [
-        rules.mobile({ locales: ['en-GH'] }),
-        rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true, whereNot: { id: customer.id } }),
-        rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true, whereNot: { id: customer.id } })
-      ])
-    })
-
-    try {
-      await request.validate({
-        schema: updatedCustomer,
-        messages: {
-          required: '{{field}} is required',
-          alpha: 'Enter a valid {{field}}, having only alphabets',
-          minLength: '{{field}} should be more than {{options.minLength}} characters',
-          regex: 'Please enter a valid mobile number',
-          mobile: 'Enter a valid GH {{field}}',
-          'phone_number.unique': '{{field}} is already registered with a customer'
-        }
-      })
-
-      const data = await request.only(['first_name', 'last_name', 'gender', 'phone_number', 'other_phone_number', 'location'])
-
-      customer.firstName = data.first_name
-      customer.lastName = data.last_name
-      customer.gender = data.gender
-      customer.phoneNumber = data.phone_number
-      customer.otherPhoneNumber = data.other_phone_number
-      customer.location = data.location
+      customer.firstName = first_name
+      customer.lastName = last_name
+      customer.gender = gender
+      customer.phoneNumber = phone_number
+      customer.otherPhoneNumber = other_phone_number
+      customer.location = location
 
       await customer.save()
 
-      session.flash('message', 'Customer updated successfully!')
-      response.redirect().back()
-    } catch (error) {
-      session.flash('errors', error.messages)
-      response.redirect().back()
-    }
+      session.flash('success', 'Customer updated successfully!')
+      response.redirect().toRoute('CustomersController.show', [customer.id])
   }
 
   public async show({ view, params }: HttpContextContract) {
     const customerId = params.id
-    const customer = Customer.find(customerId)
-    return view.render('/admin/customers/create')
+    const customer = await Customer.findOrFail(customerId)
+    return view.render('admin/customers/show', { customer })
+  }
+  
+  public async edit({ view, params }: HttpContextContract) {
+    const customerId = params.id
+    const customer = await Customer.findOrFail(customerId)
+    return view.render('admin/customers/edit', { customer })
   }
 
   public async store({ session, response, request }: HttpContextContract) {
-    const newCustomerSchema = schema.create({
-      first_name: schema.string({ trim: true }, [
-        rules.required(),
-        rules.alpha(),
-        rules.minLength(2)
-      ]),
-      location: schema.string({ trim: true }, [
-        rules.required(),
-        rules.minLength(2)
-      ]),
-      last_name: schema.string({ trim: true }, [
-        rules.required(),
-        rules.alpha(),
-        rules.minLength(2)
-      ]),
-      gender: schema.enum(['Male', 'Female']),
-      phone_number: schema.string({ trim: true }, [
-        rules.mobile({ locales: ['en-GH'] }),
-        rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true }),
-        rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true })
-
-      ]),
-      other_phone_number: schema.string.optional({ trim: true }, [
-        rules.mobile({ locales: ['en-GH'] }),
-        rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true }),
-        rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true })
-      ])
-    })
-    try {
-      await request.validate({
-        schema: newCustomerSchema,
-        messages: {
-          required: '{{field}} is required',
-          alpha: 'Enter a valid {{field}}, having only alphabets',
-          minLength: '{{field}} should be more than {{options.minLength}} characters',
-          regex: 'Please enter a valid mobile number',
-          mobile: 'Enter a valid GH {{field}}',
-          'phone_number.unique': '{{field}} is already registered with a customer'
-        }
-      })
-      const data = await request.only(['first_name', 'last_name', 'gender', 'phone_number', 'other_phone_number', 'location'])
-      await Customer.create(data)
-      session.flash('message', 'Customer added successfully!')
-      response.redirect().toRoute('CustomersController.index')
-    } catch (error) {
-      session.flash('errors', error.messages)
-      response.redirect().back()
-    }
+	  const { first_name, last_name, location, gender, phone_number, other_phone_number } = await request
+	  	.validate(CreateCustomerValidator)
+	  
+	  const customer = await Customer.create({
+	  	first_name, last_name, location, gender, phone_number, other_phone_number
+	  })
+	  session.flash('sucess', 'Customer created successfully!')
+	  response.redirect().toRoute('CustomersController.show', [customer.id])
   }
 }
 

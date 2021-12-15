@@ -9,24 +9,55 @@
 				<div class="max-w-md w-full space-y-9">
 					<div class="relative w-full mt-10 space-y-8">
 						<div class="relative">
-							<label class="font-medium text-gray-900">First Name</label> <input required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							<label class="font-medium text-gray-900">First Name</label>
+							<input name="first_name" value="{{ flashMessages.get('first_name', '') }}" required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							@if(flashMessages.has('errors.first_name'))
+							    <p class="text-red-600 text-sm" role="alert">
+							       {{ flashMessages.get('errors.first_name') }}
+							    </p>
+							@end
 						</div>
 						<div class="relative">
-							<label class="font-medium text-gray-900">Last Name</label> <input required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							<label class="font-medium text-gray-900">Last Name</label>
+							<input name="last_name" required="" value="{{ flashMessages.get('last_name', '') }}" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							@if(flashMessages.has('errors.last_name'))
+							   <p class="text-red-600 text-sm" role="alert">
+							      {{ flashMessages.get('errors.last_name') }}
+							   </p>
+							@end
 						</div>
 						<div class="relative">
-							<label class="font-medium text-gray-900">Location</label> <input required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							<label class="font-medium text-gray-900">Location</label>
+							<input name="location" required="" value="{{ flashMessages.get('location', '') }}" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
 						</div>
 						<div class="relative">
-							<label class="font-medium text-gray-900">Phone Number</label> <input required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							<label class="font-medium text-gray-900">Phone Number</label>
+							<input name="phone_number" required="" value="{{ flashMessages.get('phone_number', '') }}" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							@if(flashMessages.has('errors.phone_number'))
+							    <p class="text-red-600 text-sm" role="alert">
+							        {{ flashMessages.get('errors.phone_number') }}
+							    </p>
+							@end
 						</div>
 						<div class="relative">
-							<label class="font-medium text-gray-900">Other Phone Number</label> <input type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							<label class="font-medium text-gray-900">Other Phone Number</label>
+							<input name="other_phone_number" value="{{ flashMessages.get('other_phone_number', '') }}" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							@if(flashMessages.has('errors.other_phone_number'))
+							    <p class="text-red-600 text-sm" role="alert">
+							      {{ flashMessages.get('errors.other_phone_number') }}
+							    </p>
+							@end
 						</div>
-						<div class="relative">
-							<label class="font-medium text-gray-900">Gender</label> <input required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
-						</div>
-						<div class="relative">
+							<p class="font-medium text-gray-900">Gender</p>
+							<span>
+								<label for="male">Male</label>
+							<input name="gender" type="radio" id="male" value="Male" class="px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 focus:outline-none">
+						</span>
+						<span class="px-5">
+							<label for="female">Female</label>
+							<input name="gender" id="female" type="radio" value="Female" class="px-5 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 focus:outline-none">
+						</span>
+							<div class="relative">
 							<button class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ease">Add Customer</button>
 						</div>
 					</div>

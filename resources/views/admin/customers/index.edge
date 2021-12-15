@@ -3,7 +3,12 @@
 @set('subtitle', 'Add Customer')
 @set('subtitleroute', route('CustomersController.create'))
 @section('body')
-<p>
+
+@if(flashMessages.has('success'))
+	<p class="text-green-600 text-sm" role="alert">
+	   {{ flashMessages.get('success') }}
+	</p>
+@end
 <div class="flex flex-col">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -35,7 +40,7 @@
                 <div class="flex">
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
-                      {{customer.firstName}} {{customer.lastName}}
+                      <a  class="underline" href={{ route('CustomersController.show', [customer.id])}}>{{customer.firstName}} {{customer.lastName}} </a>
                     </div>
                   </div>
                 </div>
@@ -51,8 +56,13 @@
                 {{customer.gender}}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a> | 
-				<a href="#" class="text-indigo-600 hover:text-indigo-900">Delete</a>
+                <a href={{route('CustomersController.edit', [customer.id])}} class="px-3 text-green-600 hover:text-green-800">Edit</a> | 
+				<form
+				class="inline px-3 text-red-600"
+				method="POST"
+				action="{{route('CustomersController.destroy', [customer.id])}}?_method=DELETE">
+				<button onclick="return confirm('Headsup! This will delete this customer. Are you sure?')">Delete</button>
+				</form>
               </td>
             </tr>
 			@end

@@ -1,0 +1,51 @@
+@layout('admin/layouts/main')
+@set('title', 'Customer Details')
+@set('subtitle', 'All Customers ')
+@set('subtitleroute', route('CustomersController.index'))
+@section('body')
+	@if(flashMessages.has('success'))
+	    <p class="text-green-600 text-sm" role="alert">
+	       {{ flashMessages.get('success') }}
+	    </p>
+	@end
+<div class="min-h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-10 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">
+          Full name
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ customer.firstName}} {{ customer.lastName}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-10 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">
+          Location
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ customer.location}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-10 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">
+         Phone Numbers
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <div>{{ customer.phoneNumber }}</div>{{ customer.otherPhoneNumber }}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-10 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">
+         Gender
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ customer.gender }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+</div>
+@end
