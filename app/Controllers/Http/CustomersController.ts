@@ -27,7 +27,7 @@ export default class CustomersController {
     const customerId = params.id
     const customer = await Customer.find(customerId)
 	  
-	  const { first_name, last_name, location, gender, phone_number, other_phone_number } = await request
+    const { first_name, last_name, location, gender, phone_number, other_phone_number } = await request
 	  	.validate(UpdateCustomerValidator)
 
       customer.firstName = first_name

@@ -26,4 +26,6 @@ Route.get('/login', 'SessionController.index')
 Route.post('/login', 'SessionController.store')
 
 Route.get('/admin', 'DashboardController.index')
+
 import './routes/customer'
+

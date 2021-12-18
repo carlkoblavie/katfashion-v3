@@ -1,0 +1,130 @@
+{
+  "root": [
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "drive.local.serve",
+      "pattern": "/uploads/*",
+      "handler": "Closure",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "",
+      "pattern": "/",
+      "handler": "SessionController.index",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "",
+      "pattern": "/signup",
+      "handler": "SessionController.signup",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "",
+      "pattern": "/login",
+      "handler": "SessionController.index",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "POST"
+      ],
+      "name": "",
+      "pattern": "/login",
+      "handler": "SessionController.store",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "",
+      "pattern": "/admin",
+      "handler": "DashboardController.index",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "customers",
+      "pattern": "/customers",
+      "handler": "CustomersController.index",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "create.customer",
+      "pattern": "/customers/create",
+      "handler": "CustomersController.create",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "POST"
+      ],
+      "name": "store.customer",
+      "pattern": "/customer",
+      "handler": "CustomersController.store",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "show.customer",
+      "pattern": "/customer/:id",
+      "handler": "CustomersController.show",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "HEAD",
+        "GET"
+      ],
+      "name": "",
+      "pattern": "/customer/:id/edit",
+      "handler": "CustomersController.edit",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "PUT"
+      ],
+      "name": "",
+      "pattern": "/customer/:id",
+      "handler": "CustomersController.update",
+      "middleware": []
+    },
+    {
+      "methods": [
+        "DELETE"
+      ],
+      "name": "destroy.customer",
+      "pattern": "/customer/:id",
+      "handler": "CustomersController.destroy",
+      "middleware": []
+    }
+  ]
+}
