@@ -5,13 +5,9 @@ export default class Visitors extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-  
       table.string('name')
-  
       table.integer('age')
-  
       table.string('location')
-  
       table.timestamps(true, true)
     })
   }
@@ -19,3 +15,4 @@ export default class Visitors extends BaseSchema {
     this.schema.dropTable(this.tableName)
   }
 }
+
