@@ -1,5 +1,4 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
-
 import Customer from 'App/Models/Customer'
 import User from 'App/Models/User'
 
@@ -25,3 +24,4 @@ export const UserFactory = Factory
     }
   })
   .build()
+

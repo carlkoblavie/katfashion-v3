@@ -20,13 +20,11 @@ to: resources/views/admin/<%= h.inflection.pluralize(name) %>/index.edge
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <% fields.split(',').forEach(fieldCombo) { %>
-                <% fieldCombo.split(':').forEach(nameType) { %>
+              <% fields.split(',').forEach((fieldCombo) => { %>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                   <%= h.capitalize(nameType[0]) %>
+                   <%= h.capitalize(fieldCombo.split(':')[0]) %>
                   </th>
-                <% } %>
-              <$ } %>
+                <% }) %>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Action
             </th>
@@ -35,33 +33,19 @@ to: resources/views/admin/<%= h.inflection.pluralize(name) %>/index.edge
           <tbody class="bg-white divide-y divide-gray-200">
           @each(<%= name %> in <%= h.inflection.pluralize(name) %>)
             <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      <a  class="underline" href={{ route('<%= h.inflection.pluralize(h.capitalize(name)) %>.show', [<%= name %>.id])}}>{{<%= name %>.firstName}} {{<%= name %>.lastName}} </a>
-                    </div>
-                  </div>
-                </div>
-              </td>
-               <% fields.split(',').forEach(fieldCombo) { %>
-                <% fieldCombo.split(':').forEach(fieldNameType) { %>
+               <% fields.split(',').forEach((fieldCombo) => { %>
                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                   {{<%= name %>.<%= fieldName[0]%>}}
+                   {{<%= name %>.<%= fieldCombo.split(':')[0]%>}}
                   </td>
-                <% } %>
-              <$ } %>
+                <% }) %>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <a href={{route('<%= h.inflection.pluralize(h.capitalize(name)) %>Controller.edit', [<%= name %>.id])}} class="px-3 text-green-600 hover:text-green-800">Edit</a> | 
-<form
-class="inline px-3 text-red-600"
-method="POST"
-action="{{route('<%= h.inflection.pluralize(h.capitalize(name)) %>.destroy', [<%= name %>.id])}}?_method=DELETE">
-<button onclick="return confirm('Headsup! This will delete this <%= name %>. Are you sure?')">Delete</button>
-</form>
-          </td>
-        </tr>
-@end
+                <form class="inline px-3 text-red-600" method="POST" action="{{route('<%= h.inflection.pluralize(h.capitalize(name)) %>.destroy', [<%= name %>.id])}}?_method=DELETE">
+                  <button onclick="return confirm('Headsup! This will delete this <%= name %>. Are you sure?')">Delete</button>
+                </form>
+              </td>
+            </tr>
+           @end
           </tbody>
         </table>
       </div>

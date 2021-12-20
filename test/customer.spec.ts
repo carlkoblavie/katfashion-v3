@@ -23,7 +23,7 @@ test.group('Customers', () => {
       .merge({ phoneNumber: '0233989848', otherPhoneNumber: '0299838479' })
       .make()
 
-    await agent
+    const response = await agent
       .post('/customer')
       .field('first_name', customer.firstName)
       .field('last_name', customer.lastName)
@@ -32,9 +32,7 @@ test.group('Customers', () => {
       .field('phone_number', customer.phoneNumber)
       .field('other_phone_number', customer.otherPhoneNumber)
 
-    const newCustomer = await Customer.findBy('phoneNumber', customer.phoneNumber)
-
-    assert.exists(newCustomer)
+    assert.exists(response.headers.location, 'customer/1')
   })
 
   test('can see customer\'s details', async (assert) => {

@@ -3,7 +3,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { string } from '@ioc:Adonis/Core/Helpers'
 
 export default class CreateCustomerValidator {
-  constructor(protected ctx: HttpContextContract) {}
+  constructor(protected ctx: HttpContextContract) { }
 
   /*
    * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
@@ -25,32 +25,32 @@ export default class CreateCustomerValidator {
    *    ```
    */
   public schema = schema.create({
-      first_name: schema.string({ trim: true }, [
-        rules.required(),
-        rules.alpha(),
-        rules.minLength(2)
-      ]),
-      location: schema.string({ trim: true }, [
-        rules.required(),
-        rules.minLength(2)
-      ]),
-      last_name: schema.string({ trim: true }, [
-        rules.required(),
-        rules.alpha(),
-        rules.minLength(2)
-      ]),
-      gender: schema.enum(['Male', 'Female']),
-      phone_number: schema.string({ trim: true }, [
-        rules.mobile({ locales: ['en-GH'] }),
-        rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true }),
-        rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true })
+    first_name: schema.string({ trim: true }, [
+      rules.required(),
+      rules.regex(/^[a-zA-Z-]+$/),
+      rules.minLength(2)
+    ]),
+    location: schema.string({ trim: true }, [
+      rules.required(),
+      rules.minLength(2)
+    ]),
+    last_name: schema.string({ trim: true }, [
+      rules.required(),
+      rules.regex(/^[a-zA-Z-]+$/),
+      rules.minLength(2)
+    ]),
+    gender: schema.enum(['Male', 'Female']),
+    phone_number: schema.string({ trim: true }, [
+      rules.mobile({ locales: ['en-GH'] }),
+      rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true }),
+      rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true })
 
-      ]),
-      other_phone_number: schema.string.optional({ trim: true }, [
-        rules.mobile({ locales: ['en-GH'] }),
-        rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true }),
-        rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true })
-      ])
+    ]),
+    other_phone_number: schema.string.optional({ trim: true }, [
+      rules.mobile({ locales: ['en-GH'] }),
+      rules.unique({ table: 'customers', column: 'phone_number', caseInsensitive: true }),
+      rules.unique({ table: 'customers', column: 'other_phone_number', caseInsensitive: true })
+    ])
   })
 
 
@@ -67,11 +67,11 @@ export default class CreateCustomerValidator {
    */
 
   public messages = {
-     required: '{{field}} is required',
-     alpha: 'Enter a valid {{field}}, having only alphabets',
-     minLength: '{{field}} should be more than {{options.minLength}} characters',
-     regex: 'Please enter a valid mobile number',
-     mobile: 'Enter a valid GH {{field}}',
-     'phone_number.unique': '{{field}} is already registered with a customer'
+    required: '{{field}} is required',
+    alpha: 'Enter a valid {{field}}, having only alphabets',
+    minLength: '{{field}} should be more than {{options.minLength}} characters',
+    regex: 'Please enter a valid mobile number',
+    mobile: 'Enter a valid GH {{field}}',
+    'phone_number.unique': '{{field}} is already registered with a customer'
   }
 }

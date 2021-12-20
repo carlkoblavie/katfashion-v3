@@ -1,0 +1,69 @@
+@layout('admin/layouts/main')
+@set('title', `Add A Team`)
+@set('subtitle', `All Teams`)
+@set('subtitleroute')
+@section('body')
+
+
+@if(flashMessages.has('success'))
+<p class="text-green-600 text-sm" role="alert">
+   {{ flashMessages.get('success') }}
+</p>
+@end
+<div class="flex flex-col">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   Name
+                  </th>
+                
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   Age
+                  </th>
+                
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   Location
+                  </th>
+                
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Action
+            </th>
+           </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          @each(team in teams)
+            <tr>
+               
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{team.name}}
+                  </td>
+                
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{team.age}}
+                  </td>
+                
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{team.location}}
+                  </td>
+                
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <a href={{route('TeamsController.edit', [team.id])}} class="px-3 text-green-600 hover:text-green-800">Edit</a> | 
+                <form class="inline px-3 text-red-600" method="POST" action="{{route('Teams.destroy', [team.id])}}?_method=DELETE">
+                  <button onclick="return confirm('Headsup! This will delete this team. Are you sure?')">Delete</button>
+                </form>
+              </td>
+       </tr>
+    @end
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</p>
+@end

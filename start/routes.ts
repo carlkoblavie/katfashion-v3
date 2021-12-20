@@ -21,11 +21,12 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', 'SessionController.index')
-Route.get('/signup', 'SessionController.signup')
+Route.post('/signup', 'SignUpController.store')
 Route.get('/login', 'SessionController.index')
 Route.post('/login', 'SessionController.store')
 
-Route.get('/admin', 'DashboardController.index')
+Route.get('/admin', 'DashboardController.index').middleware('auth')
 
 import './routes/customer'
+Route.resource('teams', 'TeamsController')
 

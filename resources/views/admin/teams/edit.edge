@@ -1,0 +1,57 @@
+@layout('admin/layouts/main')
+@set('title', `Add A Team`)
+@set('subtitle', `All Teams`)
+@set('subtitleroute', route(`TeamsController.index`))
+@section('body')
+<form action="{{route('TeamsController.update', [team.id])}}?_method=PUT" method="post">
+			<div class="min-h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+				<div class="max-w-md w-full space-y-9">
+					<div class="relative w-full mt-10 space-y-8">
+          
+               <div class="relative">
+							<label class="font-medium text-gray-900">Name</label>
+							
+							<input type="text" name="name" value="{{ flashMessages.get('name', '') }}" required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							
+	           
+							@if(flashMessages.has('errors.name'))
+							  <p class="text-red-600 text-sm" role="alert">
+							    {{ flashMessages.get('errors.name') }}
+							  </p>
+							@end
+						</div>
+              
+               <div class="relative">
+							<label class="font-medium text-gray-900">Age</label>
+							
+	           
+							<input type="number" name="age" value="{{ flashMessages.get('age', '') }}" required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							
+							@if(flashMessages.has('errors.age'))
+							  <p class="text-red-600 text-sm" role="alert">
+							    {{ flashMessages.get('errors.age') }}
+							  </p>
+							@end
+						</div>
+              
+               <div class="relative">
+							<label class="font-medium text-gray-900">Location</label>
+							
+							<input type="text" name="location" value="{{ flashMessages.get('location', '') }}" required="" type="text" class="block w-full px-2 py-2 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+							
+	           
+							@if(flashMessages.has('errors.location'))
+							  <p class="text-red-600 text-sm" role="alert">
+							    {{ flashMessages.get('errors.location') }}
+							  </p>
+							@end
+						</div>
+              
+						<div class="relative">
+							<button class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ease">Update Team</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>		
+@end
