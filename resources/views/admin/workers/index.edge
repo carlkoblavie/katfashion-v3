@@ -1,0 +1,81 @@
+@layout('admin/layouts/main')
+@set('title', `All Workers`)
+@set('subtitle', `Add A Worker`)
+@set('subtitleroute',  route(`WorkersController.create`))
+@section('body')
+
+
+@if(flashMessages.has('success'))
+<p class="text-green-600 text-sm" role="alert">
+   {{ flashMessages.get('success') }}
+</p>
+@end
+<div class="flex flex-col">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   First Name
+                  </th>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   Last Name
+                  </th>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   Phone Number
+                  </th>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   Other Phone Number
+                  </th>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                   Role
+                  </th>
+                
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Action
+            </th>
+           </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          @each(worker in workers)
+            <tr>
+               
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{worker.first_name}}
+                  </td>
+                
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{worker.last_name}}
+                  </td>
+                
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{worker.phone_number}}
+                  </td>
+                
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{worker.other_phone_number}}
+                  </td>
+                
+                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                   {{worker.role}}
+                  </td>
+                
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+			  <a href={{route('WorkersController.show', [worker.id])}} class="px-3 text-blue-600 hover:text-blue-800">Show</a> |
+                <a href={{route('WorkersController.edit', [worker.id])}} class="px-3 text-green-600 hover:text-green-800">Edit</a> | 
+                <form class="inline px-3 text-red-600" method="POST" action={{route('WorkersController.destroy', [worker.id])}}?_method=DELETE>
+                  <button onclick="return confirm('Headsup! This will delete this worker. Are you sure?')">Delete</button>
+                </form>
+              </td>
+            </tr>
+           @end
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</p>
+@end

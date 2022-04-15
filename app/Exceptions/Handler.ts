@@ -27,15 +27,15 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     super(Logger)
   }
 
-public async handle(error: any, ctx: HttpContextContract) {
+  public async handle(error: any, ctx: HttpContextContract) {
     /**
      * Self handle the validation exception
      */
-     console.log(ctx.params)
+    console.log(ctx.params)
 
     if (error.code === 'E_VALIDATION_FAILURE') {
       console.log(error)
-            return ctx.response.status(422).send(error.messages)
+      //ctx.response.status(422).send(error.messages)
     }
 
     /**

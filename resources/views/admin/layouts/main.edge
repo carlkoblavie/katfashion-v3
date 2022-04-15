@@ -18,13 +18,26 @@
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href={{route('DashboardController.index')}} class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+              <a href={{route('DashboardController.index')}} class="text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
 
               <a href={{route('CustomersController.index')}} class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Customers</a>
 
-              <a href={{route('CustomersController.index')}} class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Services List</a>
+              <div class="group relative dropdown">
+              <a href={{route('PriceListItemsController.index')}} class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Price List</a>
+              <div class="group-hover:block dropdown-menu absolute hidden h-auto">
+                <ul class="top-30 w-40 bg-white shadow mt-3 px-3 py-4">
+                  <li class="py-1">
+                    <a href={{route('PriceCategoriesController.index')}} class="cursor-pointer">Categories</a>
+                  </li>
+<li class="py-1">
+                    <a href={{route('PriceSubCategoriesController.index')}} class="cursor-pointer">Sub Categories</a>
+                  </li>
 
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
+                </ul>
+              </div>
+              </div>
+
+              <a href={{route('WorkersController.index')}} class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Workers</a>
 
               <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
             </div>

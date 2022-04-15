@@ -1,11 +1,11 @@
 ---
-to: app/Models/<%= h.capitalize(name) %>.ts
+to: app/Models/<%= h.changeCase.pascalCase(name) %>.ts
 ---
 
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class <%= h.capitalize(name) %> extends BaseModel {
+export default class <%= h.changeCase.pascalCase(name) %> extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 

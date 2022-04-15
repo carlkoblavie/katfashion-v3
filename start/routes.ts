@@ -21,12 +21,21 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', 'SessionController.index')
-Route.post('/signup', 'SignUpController.store')
-Route.get('/login', 'SessionController.index')
+Route.get('/login', 'SessionController.create')
 Route.post('/login', 'SessionController.store')
+
+Route.post('/signup', 'SignupController.store')
+Route.get('/signup', 'SignupController.create')
 
 Route.get('/admin', 'DashboardController.index').middleware('auth')
 
 import './routes/customer'
-Route.resource('teams', 'TeamsController')
+
+Route.resource('workers', 'WorkersController').middleware('auth')
+
+Route.resource('price_categories', 'PriceCategoriesController').middleware('auth')
+
+Route.resource('price_sub_categories', 'PriceSubCategoriesController').middleware('auth')
+
+Route.resource('price_list_items', 'PriceListItemsController')
 

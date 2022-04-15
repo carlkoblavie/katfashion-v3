@@ -4,8 +4,8 @@ to: test/<%= name %>.spec.ts
 import test from 'japa'
 import { JSDOM } from 'jsdom'
 import supertest from 'supertest'
-import <%= h.capitalize(name) %> from 'App/Models/<%= h.capitalize(name) %>'
-import { <%= h.capitalize(name) %>Factory } from 'Database/factories'
+import <%= h.changeCase.pascalCase(name) %> from 'App/Models/<%= h.changeCase.pascalCase(name) %>'
+import { <%= h.changeCase.pascalCase(name) %>Factory } from 'Database/factories'
 import { loginUser } from './helpers'
 
 const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}`
@@ -22,27 +22,26 @@ test.group('<%= h.inflection.pluralize(name) %>', () => {
     const agent = supertest.agent(BASE_URL)
     await loginUser(agent)
 
-    const { $attributes: <%= name %> } = await <%= h.capitalize(name) %>Factory
-      .merge({ phoneNumber: '0233989848', otherPhoneNumber: '0299838479' })
+    const { $attributes: <%= h.changeCase.camelCase(name) %> } = await <%= h.changeCase.pascalCase(name) %>Factory
       .make()
 
     const response = await agent
-      .post('/<%= name %>')
+      .post('/<%= h.inflection.pluralize(name) %>')
       <% fields.split(',').forEach((fieldCombo) => { -%>
-      .field('<%= fieldCombo.split(':')[0] %>', <%= name %>.<%= fieldCombo.split(':')[0] %>)
+      .field('<%= fieldCombo.split(':')[0] %>', <%= h.changeCase.camelCase(name) %>.<%= fieldCombo.split(':')[0] %>)
       <% }) -%>
 
-    assert.exists(response.headers.location, '<%= name %>/1')  })
+    assert.exists(response.headers.location, '<%= h.inflection.pluralize(name) %>/1')  })
 
   test('can see <%= name %>\'s details', async (assert) => {
     const agent = supertest.agent(BASE_URL)
     await loginUser(agent)
 
-    const <%= name %> = await <%= h.capitalize(name) %>Factory.create()
-    const { text } = await agent.get(`/<%= name %>/${<%= name %>.id}`)
+    const { $attributes: <%= h.changeCase.camelCase(name) %> } = await <%= h.changeCase.pascalCase(name) %>Factory.create()
+    const { text } = await agent.get(`/<%= h.inflection.pluralize(name) %>/${<%= h.changeCase.camelCase(name) %>.id}`)
 
       <% fields.split(',').forEach((fieldCombo) => { -%>
-      assert.include(text, <%= name %>.<%= fieldCombo.split(':')[0] %>)
+      assert.include(text, <%= h.changeCase.camelCase(name) %>.<%= fieldCombo.split(':')[0] %>)
       <% }) -%>
   })
 
@@ -50,20 +49,20 @@ test.group('<%= h.inflection.pluralize(name) %>', () => {
     const agent = supertest.agent(BASE_URL)
     await loginUser(agent)
 
-    const { $attributes: <%= name %> } = await <%= h.capitalize(name) %>Factory.create()
+    const { $attributes: <%= h.changeCase.camelCase(name) %> } = await <%= h.changeCase.pascalCase(name)) %>Factory.create()
 
-    const update<%= name %> = await <%= h.capitalize(name) %>.Factory.make()
+    const update<%= h.changeCase.pascalCase(name) %> = await <%= h.changeCase.pascalCase(name)) %>Factory.make()
 
     await agent
-      .put(`/<%= name %>/${<%= name %>.id}`)
+      .put(`/<%= h.inflection.pluralize(name) %>/${<%= h.changeCase.camelCase(name) %>.id}`)
     <% fields.split(',').forEach((fieldCombo) => { -%>
-      .field('<%= fieldCombo.split(':')[0] %>', <%= name %>.<%= fieldCombo.split(':')[0] %>)
+      .field('<%= fieldCombo.split(':')[0] %>', <%= h.changeCase.camelCase(name) %>.<%= fieldCombo.split(':')[0] %>)
     <% }) -%>
       
-    const { text } = await agent.get(`/<%= name %>/${<%= name %>.id}`).expect(200)
+    const { text } = await agent.get(`/<%= h.inflection.pluralize(name) %>/${<%= h.changeCase.camelCase(name) %>.id}`).expect(200)
 
     <% fields.split(',').forEach((fieldCombo) => { -%>
-      assert.include(text, update<%= h.capitalize(name) %>.<%= fieldCombo.split(':')[0] %>)
+      assert.include(text, update<%= h.changeCase.pascalCase(name)) %>.<%= fieldCombo.split(':')[0] %>)
     <% }) -%>
   })
 
@@ -71,10 +70,10 @@ test.group('<%= h.inflection.pluralize(name) %>', () => {
     const agent = supertest.agent(BASE_URL)
     await loginUser(agent)
 
-    const { $attributes: <%= name %> } = await <%= h.capitalize(name) %>Factory.create()
+    const { $attributes: <%= h.changeCase.camelCase(name) %> } = await <%= h.changeCase.pascalCase(name)) %>Factory.create()
 
-    await agent.get(`/<%= name %>/${<%= name %>.id}`).expect(200)
-    await agent.delete(`/<%= name %>/${<%= name %>.id}`)
-    await agent.get(`/<%= name %>/${<%= name %>.id}`).expect(404)
+    await agent.get(`/<%= h.inflection.pluralize(name) %>/${<%= h.changeCase.camelCase(name) %>.id}`).expect(200)
+    await agent.delete(`/<%= h.inflection.pluralize(name) %>/${<%= h.changeCase.camelCase(name) %>.id}`)
+    await agent.get(`/<%= h.inflection.pluralize(name) %>/${<%= h.changeCase.camelCase(name) %>.id}`).expect(404)
   })
 })

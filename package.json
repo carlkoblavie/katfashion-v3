@@ -42,6 +42,8 @@
     "@adonisjs/session": "^6.1.2",
     "@adonisjs/shield": "^7.0.7",
     "@adonisjs/view": "^6.1.1",
+    "change-case": "^4.1.2",
+    "inflection": "^1.13.1",
     "luxon": "^2.2.0",
     "mysql": "^2.18.1",
     "phc-bcrypt": "^1.0.7",
